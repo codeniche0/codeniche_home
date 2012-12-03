@@ -1,5 +1,7 @@
 # Settings file
 
+import os.path
+
 DEBUG = True
 
 PROJECT_PATH = '/'
@@ -11,4 +13,5 @@ EMAIL_PASSWORD = ''
 EMAIL_DESTINATION = ''
 
 # This line must go at the end of this file.
-from conf_dev import *
+if os.path.exists('conf_dev.py'):
+    from conf_dev import *
