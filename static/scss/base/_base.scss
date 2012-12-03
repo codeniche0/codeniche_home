@@ -1,0 +1,491 @@
+//--------------------------------------------------------------------
+// imports
+//--------------------------------------------------------------------
+
+@import "normalize";
+@import "mixins";
+@import "debug";
+@import "fx";
+@import "inputs";
+@import "misc";
+
+
+//--------------------------------------------------------------------
+// Base
+//--------------------------------------------------------------------
+
+
+$page_width: 860px;
+
+
+//--------------------------------------------------------------------
+// Fonts
+//--------------------------------------------------------------------
+
+
+$font_family: helvetical, arial, sans-serif;
+$line_height: 1.9em;
+$fs: 16px;
+$h1_fs: $fs + 9px;
+$h2_fs: $fs + 2px;
+$sub1_fs: $fs - 2px;
+$sub2_fs: $fs - 3px;
+$sub3_fs: $fs - 4px;
+
+
+//--------------------------------------------------------------------
+// Color palette
+//--------------------------------------------------------------------
+
+
+$font_color: #384247;
+$reverse_font_color: #e6e6e6;
+$reverse_blended_font_color: #b2b2b2;
+$reverse_bg_color: #1b1b1b;
+$codeniche_orange: #ff6b44;
+$codeniche_active_orange: darken($codeniche_orange, 10%);
+$codeniche_blue: #22aacc;
+$codeniche_brightblue: lighten($codeniche_blue, 5.5%);
+$codeniche_darkblue: darken($codeniche_blue, 10%);
+$codeniche_grey: #aaaaaa;
+$codeniche_lightgrey: #e6e6e6;
+
+
+//--------------------------------------------------------------------
+// MISC
+//--------------------------------------------------------------------
+
+$left_offset: 40px;
+$block2_width: $page_width / 2 - 60px - 12px;  // = 358px
+
+//--------------------------------------------------------------------
+// HTML
+//--------------------------------------------------------------------
+
+
+html {
+    height: 100%;
+}
+
+body {
+    overflow: auto;
+    positon: relative;
+    width: 100%; height: 100%;
+    min-width: $page_width;
+    // Ensures that the footer doesn't occlude content on shorter
+    // screens.
+    /* padding-bottom: 240px; */
+    //
+    font-family: $font_family;
+    font-size: $fs;
+    color: $font_color;
+    line-height: $line_height;
+    /* background: url("/static/imgs/textures/subtle_grey_2x.png") top left repeat; */
+    background: url("/static/imgs/textures/dark_wood.png") 0 0 repeat fixed;
+    /* background: url("/static/imgs/textures/dark_wall.png") top left repeat; */
+    /* background: url("/static/imgs/textures/dark_dotted.png") top left repeat; */
+    /* background: url("/static/imgs/textures/dark_geometric.png") top left repeat; */
+}
+
+#header {
+    position: relative;
+    width: 100%;
+    margin: 28px 0 24px 0;
+    a {
+        &:hover {background: none;}
+        &:active {background: none;}
+    }
+}
+
+.niche-text {color: $codeniche_orange;}
+
+#pulldown {
+    position: fixed;
+    bottom: 0; left: 50%;
+    width: 80px;
+    padding: 10px 14px 6px 14px;
+    margin-left: -50px;
+    text-align: center;
+    background: $codeniche_brightblue;
+    z-index: 2;
+    cursor: pointer;
+    @extend .blue-hover;
+}
+
+#footer {
+    position: relative;
+    width: inherit;
+    height: 130px;
+    margin: 80px 0 0 -40px;
+    padding: 16px 40px;
+    font-size: $sub3_fs;
+    background: darken($reverse_bg_color, 4%);
+    color: $reverse_blended_font_color;
+    a {
+        color: $reverse_blended_font_color;
+        &:hover {
+            color: #ffffff;
+            i {color: #ffffff;}
+        }
+        &:active {
+            color: $codeniche_orange;
+            i {color: $codeniche_orange;}
+        }
+    }
+    ul, li {margin: 0; padding: 0;}
+    ul {
+        position: relative;
+        width: $page_width / 3 - 40px;
+        width: 33%;
+        line-height: 2.2em;
+        @extend .col;
+        li {
+            min-height: 28px;
+            padding-left: 100px;
+        }
+    }
+    ul + ul {
+        border-left: 1px solid lighten($reverse_bg_color, 6%);
+    }
+}
+
+#subpage {
+    position: relative;
+}
+
+#main {
+    position: relative;
+    width: $page_width;
+    /* min-height: 100%; */
+    margin: 0 auto;
+    padding: 40px 40px 0 40px;
+    background: #ffffff;
+}
+
+#nav {
+    position: fixed;
+    top: 0; left: 50%;
+    width: $page_width + 160;
+    margin-left: -($page_width / 2) - 80;
+    padding: 4px 0;
+    background: $codeniche_brightblue;
+    text-align: center;
+    z-index: 2;
+    font-size: $sub2_fs;
+    color: lighten($font_color, 12%);
+    @include box-shadow(0 2px 10px #aac);
+    ul {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    li {
+        display: inline-block;
+        margin: 0 10px;
+        &.last {margin-right: 0;}
+        font-weight: bold;
+        a {@extend .blue-hover;}
+    }
+    .current {color: $codeniche_darkblue;}
+}
+
+.blue-hover {
+    color: #ffffff;
+    @include transition(color 120ms linear);
+    &:hover {
+        color: $codeniche_darkblue;
+        @include transition(color 120ms linear);
+    }
+}
+
+.nav-tri {
+    position: absolute;
+    bottom: -40px;
+    width: 40px; height: 40px;
+    background: url("/static/imgs/misc/nav_tris.png") 0 no-repeat;
+}
+
+.nav-tri-right {
+    @extend .nav-tri;
+    right: 0;
+    background-position: -40px 0;
+}
+
+li {list-style-type: none;}
+
+a {
+    color: $font_color;
+    text-decoration: none;
+}
+
+.block {
+    position: relative;
+    margin: 24px 0;
+    padding: 16px 30px;
+    background: lighten($reverse_font_color, 6%);
+    border-radius: 4px;
+    font-size: $fs;
+    line-height: $line_height;
+    h2 {
+        margin: 0 0 8px 0;
+        color: $codeniche_blue;
+        font-size: $fs;
+        font-weight: normal;
+    }
+    em {
+        color: $codeniche_blue;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: none;
+        .slash {color: darken($codeniche_lightgrey, 10%);}
+    }
+    a {color: $codeniche_orange;}
+}
+
+.email {
+    color: $codeniche_orange;
+}
+
+.columns-2 {
+    margin: 24px 0;
+    font-size: 0;
+    .block {
+        @extend .col;
+        width: $block2_width;
+        margin: 0;
+        font-size: $fs;
+    }
+    .block + .block {margin-left: 24px;}
+}
+
+.column-extended {
+    @extend .col;
+    width: $block2_width;
+    padding: 0 30px;
+    .block {
+        width: 100%;
+        margin: 0 0 0 -30px;
+    }
+    .block + .block {margin-top: 24px;}
+}
+
+.column-extended + .column-extended {
+    margin-left: 24px;
+}
+
+#home, #portfolio, #about, #contact, #work {position: relative;}
+
+.headline {text-align: center;}
+
+#work {
+    .sep {
+        width: 100%;
+        margin: -4px 0;
+        text-align: center;
+        color: $codeniche_grey;
+    }
+}
+
+.intro {
+    padding: {top: 24px; bottom: 24px;}
+    font-family: georgia;
+    font-size: $h1_fs + 12px;
+    line-height: 1.54em;
+    text-align: center;
+    strong {
+        font-weight: normal;
+        color: $codeniche_orange;
+    }
+}
+
+#home .intro {
+    @include transition(color 400ms ease-out);
+    &:hover {
+        color: lighten($reverse_bg_color, 11%);
+        @include transition(color 400ms ease-out);
+    }
+}
+
+#home .sub-info .block {
+    min-height: 380px;
+}
+
+.banner {
+    width: $page_width;
+    padding: {left: 40px; right: 40px}
+    margin: {
+        bottom: 40px;
+        left: -40px
+    }
+    border-radius: 0;
+    background: lighten($reverse_bg_color, 6%);
+    color: $reverse_font_color;
+}
+
+#portfolio .block {
+    &.pic {
+        padding: 16px;
+        line-height: 0;
+        width: 358px + 28px;
+        @include transition(background-color 600ms ease-out);
+        &:hover {
+            background-color: lighten($codeniche_brightblue, 16%);
+            @include transition(background-color 600ms ease-out);
+        }
+        .pulltab {
+            cursor: pointer;
+            background-color: $codeniche_brightblue;
+            a {
+                display: inline-block;
+                width: 100%; height: 100%;
+                color: #ffffff;
+            }
+            &:hover {
+                color: #ffffff;
+                background-color: $codeniche_orange;
+            }
+        }
+    }
+    img {width: 100%;}
+}
+
+.pulltab {
+    display: inline-block;
+    min-width: 72px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background: $codeniche_brightblue;
+    @extend .blue-hover;
+}
+
+.site-info {
+    z-index: 1;
+    display: none;
+    position: absolute;
+    bottom: 16px;
+    width: inherit;
+    padding: 16px;
+    margin-left: -16px;
+    line-height: $line_height;
+    background: #fcfcfc;
+}
+
+.orange-bar {
+    width: 100%;
+    height: 3px;
+    background: $codeniche_orange;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    width: $page_width + 80px;
+    margin-left: -($page_width / 2) - 40px;
+}
+
+ul.social-links, ul.page-links {
+    li i {
+        margin-right: 8px;
+        color: darken($reverse_blended_font_color, 16%);
+    }
+}
+
+.field {
+    padding: 4px 6px;
+    border: 1px solid darken($codeniche_lightgrey, 4.2%);
+    @include transition(border-color 300ms linear);
+    &:hover {
+        border: 1px solid $codeniche_blue;
+        @include transition(border-color 300ms linear);
+    }
+    &:focus {
+        border: 1px solid lighten($codeniche_orange, 12%);
+        outline: none;
+    }
+}
+
+.contact-form {
+    .field-block {
+        position: relative;
+        &.disabled {
+            input, textarea {
+                pointer: default;
+                background: lighten($codeniche_lightgrey, 8%);
+                color: $codeniche_grey;
+            }
+        }
+    }
+    .field-block + .field-block {margin-top: 14px;}
+    label {
+        display: block;
+        font-size: $sub1_fs;
+        color: lighten($font_color, 12%);
+        i {color: darken($codeniche_lightgrey, 6%);}
+    }
+    input[type="text"] {
+        width: $block2_width - 12px;
+        @extend .field;
+    }
+    textarea {
+        @extend .field;
+        display: block;
+        width: $block2_width - 12px;
+        margin-bottom: 2px;
+        border: 1px solid darken($codeniche_lightgrey, 4.2%);
+        resize: none;
+    }
+    .required {
+        display: none;
+        float: right;
+        font-size: $sub3_fs;
+        color: #ff2020;
+    }
+    .loader {
+        display: none;
+        vertical-align: middle;
+    }
+    .confirmation {
+        display: none;
+        padding: 4px 12px;
+        background: lighten($codeniche_brightblue, 18%);
+        color: #ffffff;
+    }
+}
+
+input[type="submit"], input[type="button"], .submit {
+    position: relative;
+    min-width: 80px;
+    padding: 10px 12px;
+    background: $codeniche_orange;
+    color: #ffffff;
+    border: none;
+    @include transition(background 300ms linear);
+    &:active {background: $codeniche_active_orange;}
+    &.disabled {
+        cursor: default;
+        background: $codeniche_grey;
+        color: lighten($codeniche_lightgrey, 12%);
+    }
+}
+
+.quotes p {
+    margin: 0 0 $line_height/2 0;
+}
+
+.quote-sayer {
+    display: block;
+    font-weight: bold;
+    color: lighten($font_color, 8%);
+}
+
+
+//--------------------------------------------------------------------
+// Images
+//--------------------------------------------------------------------
+
+
+// Extend class
+.image {
+    display: inline-block;  // Lets width and height work.
+    background: {position: 0 0; repeat: no-repeat};
+    margin: 0;
+}
