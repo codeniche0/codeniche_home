@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 from conf import conf
-# from send_email import send_email
 from flask_mail import Mail
 from flask_mail import Message
 
