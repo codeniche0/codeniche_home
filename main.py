@@ -16,8 +16,10 @@ def send_email(msg, recips):
 def mail():
     msg = request.form['field-message']
     recips = [request.form['field-email']]
-    send_email(msg, recips)
-    return 'success'
+    def send_email_wrapped():
+        send_email(msg, recips)
+    multiprocessing.Process(target=send_email_wrapped).start()
+    return 'success: email sent'
 
 @app.route('/')
 @app.route('/<subpage>')
