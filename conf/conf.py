@@ -13,5 +13,7 @@ EMAIL_PASSWORD = ''
 EMAIL_DESTINATION = ''
 
 # This line must go at the end of this file.
-if os.path.exists('conf_dev.py'):
+try:
     from conf_dev import *
+except ImportError:
+    pass
