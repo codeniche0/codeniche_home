@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from conf import conf
-from send_email import send_email
+# from send_email import send_email
 from flask_mail import Mail
 from flask_mail import Message
 
@@ -10,12 +10,9 @@ mailer = Mail(app)
 
 @app.route('/mail', methods=['POST'])
 def mail():
-    from_address = request.form['field-email']
-    message = "Sender's email:\n{0}\n\nMessage:\n{1}".format(from_address, request.form['field-message'])
-    subject = 'Codeniche contact form email'
-    send_email(conf.EMAIL_USERNAME, conf.EMAIL_PASSWORD, from_address, conf.EMAIL_DESTINATION, message, subject)
-    msg = Message('Subject', recipients=['long.live.vim@gmail.com'])
-    msg.body = 'body of message'
+    field_message = request.form['field-message']
+    field_recipients = [request.form['field-email']]
+    msg = Message(field_message, sender=conf.DEFAULT_MAIL_SENDER, recipients=field_recipients)
     mailer.send(msg)
     return 'success'
 
